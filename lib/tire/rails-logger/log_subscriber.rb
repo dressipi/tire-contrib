@@ -9,13 +9,25 @@ module Tire
         Thread.current["tire_search_runtime"] ||= 0
       end
 
+      def self.count=(value)
+        Thread.current["tire_search_count"] = value
+      end
+
+      def self.count
+        Thread.current["tire_search_count"] ||= 0
+      end
+
+
+
       def self.reset_runtime
         rt, self.runtime = runtime, 0
-        rt
+        ct, self.count = count, 0
+        return rt,ct
       end
 
       def search(event)
         self.class.runtime += event.duration
+        self.class.count += 1
         return unless logger.debug?
 
         payload = event.payload
