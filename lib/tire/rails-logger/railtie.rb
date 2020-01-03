@@ -10,7 +10,7 @@ module Tire
         # Inject instrumentation into Tire::Search
         #
         Tire::Search::Search.module_eval do
-          include Tire::Rails::Instrumentation
+          prepend Tire::Rails::Instrumentation
         end
 
         # Hook into Rails controllers to provide logging
